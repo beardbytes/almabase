@@ -1,4 +1,7 @@
+import re
+
 from fuzzywuzzy import fuzz
+from dateutil.parser import parse
 class Profile(object):
     """
     Class to define the Profiles
@@ -42,6 +45,16 @@ class Fields(Profile):
             field_dict = {}
             for count in range(m):
                 key, value = input().split()
+                if key == 'first_name' and value != "":
+                    value = input(f"please enter the {key}")
+                if key == 'last_name' and value != "":
+                    value = input(f"please enter the {key}")
+                if key == 'email' and value != re.match(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', key):
+                    value = input(f"Enter a valid {key}")
+                if key == 'class_year' and value <= 0:
+                    value = input(f"Enter a valid {key}")
+                if key == 'birth_date' and parse(value):
+                    value = input(f"Enter the valid {key}")
                 field_dict[key] = value
             all_profiles.append({profile: field_dict})
 
