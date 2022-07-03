@@ -59,6 +59,13 @@ class Fields(Profile):
         return total_score
 
     def find_duplicates_utils(self, profiles, profile1: dict, profile2: dict) -> dict:
+        """
+        util function to find the duplicates
+        :param profiles: the duplicate profiles
+        :param profile1: the information about first profile
+        :param profile2: the information about second profile
+        :return: (dict) meta data about duplicate profiles
+        """
         total_score = 0
         matching_attributes:list = []
         non_matching_attributes:list = []
@@ -70,6 +77,10 @@ class Fields(Profile):
             matching_attributes.append('first_name')
             matching_attributes.append('last_name')
             matching_attributes.append('email')
+        else:
+            non_matching_attributes.append('first_name')
+            non_matching_attributes.append('last_name')
+            non_matching_attributes.append('email')
         if profile1.get('class_year') == profile2.get('class_year') \
                 and profile1['class_year'] == profile2['class_year']:
             total_score += 1
