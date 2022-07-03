@@ -50,11 +50,12 @@ class Fields(Profile):
             profiles_dict = {k: all_profiles[index][k] for k in profiles if k in all_profiles[index]}
             if len(profiles_dict) == 1:
                 final.update(profiles_dict)
-            for profile_value in profiles_dict.values():
-                if not (set(fields) - profile_value.keys()): # check to see that
-                    first_profile = final[profiles[0]]
-                    second_profile = final[profiles[1]]
-                    total_score = self.find_duplicates_utils(profiles, first_profile, second_profile)
+        print(final)
+            # for profile_value in profiles_dict.values():
+            #     if not (set(fields) - profile_value.keys()): # check to see that the fields are present in the profiles
+        first_profile = final[profiles[0]]
+        second_profile = final[profiles[1]]
+        total_score = self.find_duplicates_utils(profiles, first_profile, second_profile)
         return total_score
 
     def find_duplicates_utils(self, profiles, profile1: dict, profile2: dict) -> dict:
@@ -91,18 +92,19 @@ class Fields(Profile):
         else:
             ignored_attributes.append('birth_date')
         profile_dup = {}
-        if total_score > 1:
-            profile_dup = {
-                'duplicate_profiles': profiles,
-                'total_score': total_score,
-                'matching_attributes': matching_attributes,
-                'non_matching_attributes': non_matching_attributes,
-                'ignored_attributes': ignored_attributes
-            }
+
+        profile_dup = {
+            'duplicate_profiles': profiles,
+            'total_score': total_score if total_score >= 1 else 0,
+            'matching_attributes': matching_attributes,
+            'non_matching_attributes': non_matching_attributes,
+            'ignored_attributes': ignored_attributes
+        }
         return profile_dup
 
 
 if __name__ == '__main__':
     obj = Fields()
-    obj.find_duplicates(profiles=["profile1", "profile2"],
+    final = obj.find_duplicates(profiles=["profile1", "profile2"],
                         fields=["first_name", "last_name", "email", "class_year", "birth_date"])
+    print(final)
