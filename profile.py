@@ -59,16 +59,18 @@ class Fields(Profile):
             all_profiles.append({profile: field_dict})
 
         final = {} # information about all the dictionaries to be compared from the profile list
-        for index in range(len(all_profiles)):
-            profiles_dict = {k: all_profiles[index][k] for k in profiles if k in all_profiles[index]}
-            if len(profiles_dict) == 1:
-                final.update(profiles_dict)
-        print(final)
-            # for profile_value in profiles_dict.values():
-            #     if not (set(fields) - profile_value.keys()): # check to see that the fields are present in the profiles
-        first_profile = final[profiles[0]]
-        second_profile = final[profiles[1]]
-        total_score = self.find_duplicates_utils(profiles, first_profile, second_profile)
+        try:
+            for index in range(len(all_profiles)):
+                profiles_dict = {k: all_profiles[index][k] for k in profiles if k in all_profiles[index]}
+                if len(profiles_dict) == 1:
+                    final.update(profiles_dict)
+            first_profile = final[profiles[0]]
+            second_profile = final[profiles[1]]
+            total_score = self.find_duplicates_utils(profiles, first_profile, second_profile)
+        except KeyError as e:
+            raise KeyError("Key error")
+        except Exception as exe:
+            raise exe
         return total_score
 
     def find_duplicates_utils(self, profiles, profile1: dict, profile2: dict) -> dict:
@@ -85,45 +87,48 @@ class Fields(Profile):
         ignored_attributes = []
         _str1 = profile1['first_name'] + profile1['last_name'] + profile1['email']
         _str2 = profile2['first_name'] + profile2['last_name'] + profile2['email']
-        if fuzz.ratio(_str1, _str2) > 80:
-            total_score += 1
-            matching_attributes.append('first_name')
-            matching_attributes.append('last_name')
-            matching_attributes.append('email')
-        else:
-            non_matching_attributes.append('first_name')
-            non_matching_attributes.append('last_name')
-            non_matching_attributes.append('email')
-        if profile1.get('class_year') == profile2.get('class_year') \
-                and profile1['class_year'] == profile2['class_year']:
-            total_score += 1
-            matching_attributes.append('class_year')
-        elif profile1.get('class_year') == profile2.get('class_year') \
-                and profile1['class_year'] != profile2['class_year']:
-            total_score -= 1
-            non_matching_attributes.append('class_year')
-        else:
-            ignored_attributes.append('class_year')
+        try:
+            if fuzz.ratio(_str1, _str2) > 80:
+                total_score += 1
+                matching_attributes.append('first_name')
+                matching_attributes.append('last_name')
+                matching_attributes.append('email')
+            else:
+                non_matching_attributes.append('first_name')
+                non_matching_attributes.append('last_name')
+                non_matching_attributes.append('email')
+            if profile1.get('class_year') == profile2.get('class_year') \
+                    and profile1['class_year'] == profile2['class_year']:
+                total_score += 1
+                matching_attributes.append('class_year')
+            elif profile1.get('class_year') == profile2.get('class_year') \
+                    and profile1['class_year'] != profile2['class_year']:
+                total_score -= 1
+                non_matching_attributes.append('class_year')
+            else:
+                ignored_attributes.append('class_year')
 
-        if profile1.get('birth_date') == profile2.get('birth_date') \
-                and profile1['birth_date'] == profile2['birth_date']:
-            total_score += 1
-            matching_attributes.append('birth_date')
-        elif profile1.get('birth_date') == profile2.get('birth_date') \
-                and profile1['birth_date'] != profile2['birth_date']:
-            total_score -= 1
-            non_matching_attributes.append('birth_date')
-        else:
-            ignored_attributes.append('birth_date')
-        profile_dup = {}
+            if profile1.get('birth_date') == profile2.get('birth_date') \
+                    and profile1['birth_date'] == profile2['birth_date']:
+                total_score += 1
+                matching_attributes.append('birth_date')
+            elif profile1.get('birth_date') == profile2.get('birth_date') \
+                    and profile1['birth_date'] != profile2['birth_date']:
+                total_score -= 1
+                non_matching_attributes.append('birth_date')
+            else:
+                ignored_attributes.append('birth_date')
+            profile_dup = {}
 
-        profile_dup = {
-            'duplicate_profiles': profiles,
-            'total_score': total_score if total_score >= 1 else 0,
-            'matching_attributes': matching_attributes,
-            'non_matching_attributes': non_matching_attributes,
-            'ignored_attributes': ignored_attributes
-        }
+            profile_dup = {
+                'duplicate_profiles': profiles,
+                'total_score': total_score if total_score >= 1 else 0,
+                'matching_attributes': matching_attributes,
+                'non_matching_attributes': non_matching_attributes,
+                'ignored_attributes': ignored_attributes
+            }
+        except Exception as exe:
+            raise exe
         return profile_dup
 
 
