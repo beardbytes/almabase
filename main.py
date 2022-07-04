@@ -1,4 +1,5 @@
 import re
+import datetime
 
 from fuzzywuzzy import fuzz
 from dateutil.parser import parse
@@ -85,6 +86,7 @@ class Fields(Profile):
         matching_attributes:list = []
         non_matching_attributes:list = []
         ignored_attributes = []
+        format = '%Y-%m-%d'
         _str1 = profile1['first_name'] + profile1['last_name'] + profile1['email']
         _str2 = profile2['first_name'] + profile2['last_name'] + profile2['email']
         try:
@@ -108,6 +110,9 @@ class Fields(Profile):
             else:
                 ignored_attributes.append('class_year')
 
+            profile1['birth_date'] = datetime.datetime.strptime(profile1['birth_date'], format)
+            profile2['birth_date'] = datetime.datetime.strptime(profile2['birth_date'], format)
+
             if profile1.get('birth_date') == profile2.get('birth_date') \
                     and profile1['birth_date'] == profile2['birth_date']:
                 total_score += 1
@@ -118,7 +123,6 @@ class Fields(Profile):
                 non_matching_attributes.append('birth_date')
             else:
                 ignored_attributes.append('birth_date')
-            profile_dup = {}
 
             profile_dup = {
                 'duplicate_profiles': profiles,
