@@ -1,5 +1,7 @@
 # almabase
-### run profile.py -> python profile.py
+### <li>Steps</li>
+<ol>pip install -r requirements.txt</ol>
+<ol>run profile.py -> python profile.py</ol>
 
 ## INPUT
 Enter the number of profiles you want
@@ -16,13 +18,15 @@ Enter the number of fields you want for profile1
 <li>class_year 2012</li>
 <li>birth_date 1990-11-10</li>
 </ul>
+
 Enter the number of fields you want for profile2
-5
-first_name john
-last_name mah
-email john.mah@gmail.com
-class_year 2012
-birth_date 1990-01-01`
+<ul>5
+<li>first_name john</li>
+<li>last_name mah</li>
+<li>email john.mah@gmail.com</li>
+<li>class_year 2012</li>
+<li>birth_date 1990-11-01</li>
+</ul>
 
 ## OUTPUT
 <li>
