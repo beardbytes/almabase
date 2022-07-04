@@ -49,7 +49,7 @@ class Fields(Profile):
                     value = input(f"please enter the {key}")
                 if key == 'last_name' and value != "":
                     value = input(f"please enter the {key}")
-                if key == 'email' and value != re.match(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', key):
+                if key == 'email' and value != re.match(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', value):
                     value = input(f"Enter a valid {key}")
                 if key == 'class_year' and value <= 0:
                     value = input(f"Enter a valid {key}")
