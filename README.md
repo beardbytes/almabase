@@ -1,6 +1,9 @@
-# almabase
+# almabase assignment
+
 ### <li>Steps</li>
+
 <ol>bash run.sh</ol>
+
 
 ## INPUT
 Enter the number of profiles you want
