@@ -1,7 +1,7 @@
 # almabase
 ### <li>Steps</li>
 <ol>pip install -r requirements.txt</ol>
-<ol>run profile.py -> python profile.py</ol>
+<ol>python main.py</ol>
 
 ## INPUT
 Enter the number of profiles you want
