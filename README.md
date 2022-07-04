@@ -2,7 +2,7 @@
 
 ### <li>Steps</li>
 
-<ol>bash run.sh</ol>
+<ol>bash main.sh</ol>
 
 
 ## INPUT
