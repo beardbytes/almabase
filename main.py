@@ -46,16 +46,10 @@ class Fields(Profile):
             field_dict = {}
             for count in range(m):
                 key, value = input().split()
-                if key == 'first_name' and value != "":
-                    value = input(f"please enter the {key}")
-                if key == 'last_name' and value != "":
-                    value = input(f"please enter the {key}")
                 if key == 'email' and value != re.match(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b', value):
                     value = input(f"Enter a valid {key}")
                 if key == 'class_year' and value <= 0:
                     value = input(f"Enter a valid {key}")
-                if key == 'birth_date' and parse(value):
-                    value = input(f"Enter the valid {key}")
                 field_dict[key] = value
             all_profiles.append({profile: field_dict})
 
@@ -127,9 +121,9 @@ class Fields(Profile):
             profile_dup = {
                 'duplicate_profiles': profiles,
                 'total_score': total_score if total_score >= 1 else 0,
-                'matching_attributes': matching_attributes,
-                'non_matching_attributes': non_matching_attributes,
-                'ignored_attributes': ignored_attributes
+                'matching_attributes': matching_attributes if matching_attributes else None,
+                'non_matching_attributes': non_matching_attributes if non_matching_attributes else None,
+                'ignored_attributes': ignored_attributes if ignored_attributes else None
             }
         except Exception as exe:
             raise exe
